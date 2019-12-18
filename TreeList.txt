@@ -1,0 +1,13 @@
+Douglas Fir
+Cedar
+Pine
+Redwood
+Ash
+Birch
+Cherry
+Mahogany
+Maple
+Oak
+Poplar
+Teak
+Walnut
