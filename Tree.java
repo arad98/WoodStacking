@@ -10,21 +10,48 @@ public class Tree {
     boolean pressureTreated = false;
     private ArrayList<String> currentTreeList = new ArrayList<String>();
     private String currentTree = "Default: fake wood";
+    private double avgdensity = 0; // density of the wood type lb/ft^3
 
     public Tree() {
         updateTreeList();
     }
 
-    public Tree(String input) {
+    public Tree(String input, double density) {
         updateTreeList();
-        setCurTree(input);
+        setCurTree(input,density);
     }
 
     public Tree(Object copy) {
         if(copy instanceof Tree) {
-            setCurTree(((Tree) copy).getCurrentTree());
+            setCurTree(((Tree) copy).getCurrentTree(),getAvgdensity());
             setPressureTreated(getPressureTreated());
         }
+    }
+
+    /**
+     * getter for avg density val
+     * @return int val for average density
+     */
+    public double getAvgdensity() {
+        return avgdensity;
+    }
+    /**
+     * setter for avg density of wood
+     * @param den input for new density val lb/ft^3
+     */
+    public void setAvgdensity(double den) {
+        this.avgdensity = den;
+    }
+
+    /**
+     * setter for avg density of wood
+     * @param input input for new density val lb/ft^3
+     */
+    public void setAvgdensity(String input) {
+        String treeTxt = input;
+        String[] densitySplit = treeTxt.split("-");
+        double out = Double.parseDouble(densitySplit[1]);
+        setAvgdensity(out);
     }
 
     /**
@@ -81,6 +108,7 @@ public class Tree {
                 // todo create interface that asks for the type of wood/ knows the type of wood and can be selected
             } else {
                 this.currentTree = currentTreeList.get(in);
+                setAvgdensity(getCurrentTree());
             }
         } catch(Exception e) {
             System.out.print("");
@@ -91,9 +119,10 @@ public class Tree {
      * setter method for the current tree also adds it to the total tree list
      * @param input string val
      */
-    public void setCurTree(String input) {
-        currentTreeList.add(input);
-        currentTree = input;
+    public void setCurTree(String input,double density) {
+        String out = input+"density-" + density + "-ft/lb^3";
+        currentTreeList.add(out);
+        currentTree = out;
     }
 
     /**
@@ -134,13 +163,20 @@ public class Tree {
         System.out.println(test.getCurrentTree());
         System.out.println(test.getList());
         System.out.println(test.listSize());
+        System.out.println(test.getAvgdensity());
         test.setCurTreeFromList(14);
+        System.out.println(test.getCurrentTree());
         test.setCurTreeFromList(-5);
+        System.out.println(test.getCurrentTree());
         test.setCurTreeFromList(3);
         System.out.println(test.getCurrentTree());
+        System.out.println(test.getAvgdensity());
+        test.setCurTreeFromList(9);
+        System.out.println(test.getAvgdensity());
         test.setPressureTreated(true);
         System.out.println(test.getCurrentTree());
         System.out.println(test.toString());
+        System.out.println(test.getAvgdensity());
     }
 }
 
