@@ -1,13 +1,13 @@
-Douglas Fir
-Cedar
-Pine
-Redwood
-Ash
-Birch
-Cherry
-Mahogany
-Maple
-Oak
-Poplar
-Teak
-Walnut
+Douglas Fir density-26.2-lb/ft^3
+Cedar density-23.5-lb/ft^3
+Pine density-21.9-lb/ft^3
+Redwood density-28.1-lb/ft^3
+Ash density-33.7-lb/ft^3
+Birch density-31.8-lb/ft^3
+Cherry density-39.3-lb/ft^3
+Mahogany density-53.1-lb/ft^3
+Maple density-38.7-lb/ft^3
+Oak density-48.1-lb/ft^3
+Poplar density-21.9-lb/ft^3
+Teak density-41.2-lb/ft^3
+Walnut density-40-lb/ft^3
