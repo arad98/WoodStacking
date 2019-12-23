@@ -10,28 +10,32 @@ public class wood {
     private int width = 0; //todo some wood is'nt an even inches it could be 1 and 16/33 inches long
     private int depth = 0;
     private int length = 0;
-    private Tree tree = new Tree(); //todo change from string to seperate class that hass most common wood tpyes and average density and if PT or not
+    private Tree tree = new Tree();
 
     /**
      * constructor for a type of wood if input is in inches will convert to cm
      * @param w width
      * @param d depth
      * @param l length
-     * @param
+     * @param t is the tree wood
+     * @param density is the tree wood density val
+     * @param pT boolean value if wood is pressure treated
      */
-    public wood(int w, int d, int l, String t) {
+    public wood(int w, int d, int l, String t, double density,boolean pT) {
         setWidth(w);
         setDepth(d);
         setLength(l);
         tree = new Tree(t);
+        tree.setCurTree(t,d);
+        tree.setPressureTreated(pT);
     }
 
     public wood() {
         setWidth(2);
         setDepth(4);
         setLength(8);
-        tree = (new Tree("Oak"));
-
+        tree = new Tree();
+        tree.setCurTreeFromList(1);
     }
 
     /**
@@ -44,6 +48,7 @@ public class wood {
             depth = ((wood) other).getDepth();
             length = ((wood) other).getLength();
             tree = ((wood) other).getTree();
+            //todo finish fixing wood class with updated Tree class methods, also implement the weight calculator as another data variable of wood
         } else {
             throw new woodException("Copy object must be wood object");
         }
