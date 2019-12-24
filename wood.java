@@ -11,6 +11,7 @@ public class wood {
     private int depth = 0;
     private int length = 0;
     private Tree tree = new Tree();
+    private double weight = -1; // default val is -1 to show if the weight has'nt been calculated
 
     /**
      * constructor for a type of wood if input is in inches will convert to cm
@@ -20,29 +21,41 @@ public class wood {
      * @param t is the tree wood
      * @param density is the tree wood density val
      * @param pT boolean value if wood is pressure treated
+     * @throws Exception if and input is negative
      */
-    public wood(int w, int d, int l, String t, double density,boolean pT) {
-        setWidth(w);
-        setDepth(d);
-        setLength(l);
+    public wood(int w, int d, int l, String t, double density,boolean pT) throws woodException {
+        if(w <= 0 || d <= 0 || l <= 0) {
+            throw new woodException("input cannot be less than 0 or 0 for wood dimensions");
+            //todo check if when this is thrown the wood object isnt ruined
+        } else {
+            setWidth(w);
+            setDepth(d);
+            setLength(l);
+        }
         tree = new Tree(t);
         tree.setCurTree(t,d);
         tree.setPressureTreated(pT);
+        calctWeight();
     }
 
-    public wood() {
+    /**
+     * regular no arg constructor creates a default object
+     * @throws woodException if the weight of the tree is negative
+     */
+    public wood() throws woodException {
         setWidth(2);
         setDepth(4);
         setLength(8);
         tree = new Tree();
-        tree.setCurTreeFromList(1);
+        tree.setCurTreeFromList(1); // douglas fir
+        calctWeight();
     }
 
     /**
      * copy constructor for wood object
      * @param other other wood object
      */
-    public wood(Object other) throws Exception {
+    public wood(Object other) throws woodException {
         if(other instanceof wood) {
             width = ((wood) other).getWidth();
             depth = ((wood) other).getDepth();
@@ -111,14 +124,50 @@ public class wood {
         length = in;
     }
 
+    /**
+     * setter method for the weight of the wood piece
+     * @param in double input
+     * @throws Exception if input is a negative
+     */
+    public void setWeight(double in) throws woodException {
+        if(in >= 0 ){
+            weight = in;
+        } else {
+            throw new woodException("-error-Weight cant be a negative number ");
+        }
+    }
+
+    /**
+     * method returns the weight of the wood piece in pounds, as avg density is lb/ft^3
+     * @return the value of wood weight in pounds
+     */
+    public double getWeight() {
+        return this.weight;
+    }
+
+    /**
+     * method calculates the weight of the wood piece in pounds, as avg density is lb/ft^3
+     * @return the value of wood weight in pounds
+     */
+    public void calctWeight() throws woodException{
+        double out = 0;
+        double volume = getDepth() * getLength() * getWidth();
+        out = volume * this.tree.getAvgdensity();
+        try {
+            setWeight(out);
+        } catch (Exception e) {
+            throw new woodException("thrown in method calcWeight somehow");
+        }
+    }
+
     public String toString() {
         String out = "";
         out += getWidth() + " in,";
         out += getDepth() + " in,";
         out += getLength() + " ft, ";
-        out += getTree();
+        out += getTree() + " , ";
+        out += getWeight() + " lbs";
         return out;
-
     }
 
 

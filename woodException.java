@@ -1,12 +1,11 @@
 public class woodException extends Exception {
+//todo fix code so that i can throw new woodException instead of throws Exception in other method headers
 
-    public woodException(String input) throws Exception{
-        System.out.println("-"+input+"-");
-        //throw new Exception();
+    public woodException(String input) {
+       super("-"+input+"-");
     }
 
-    public woodException() throws Exception{
-        System.out.println("Exception as thrown ");
-        //throw new Exception();
+    public woodException(){
+        super("-Exception is thrown-");
     }
 }
