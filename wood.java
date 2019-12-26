@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * class holds data and methods for creating a type of lumber wood with a width (in), depth(in) and length (ft)
  * as of 12/17/19 current implementation does not work for plywood or for non-standard cut wood and all measures are assumed to be nominal
@@ -47,7 +49,7 @@ public class wood {
         setDepth(4);
         setLength(8);
         tree = new Tree();
-        tree.setCurTreeFromList(1); // douglas fir
+        tree.setCurTreeFromList(0); // douglas fir
         calctWeight();
     }
 
@@ -75,6 +77,8 @@ public class wood {
         return this.width;
     }
 
+
+
     /**
      * getter method for Depth
      * @return depth val
@@ -89,6 +93,14 @@ public class wood {
      */
     public int getLength() {
         return this.length;
+    }
+
+    /**
+     * converts the length of the wood in feet to inches
+     * @return int val with length in inches
+     */
+    public int getLengthAsInches() {
+        return getLength()*12;
     }
 
     /**
@@ -131,7 +143,8 @@ public class wood {
      */
     public void setWeight(double in) throws woodException {
         if(in >= 0 ){
-            weight = in;
+            double newWeight = Double.parseDouble(String.format("%,.2f",in));
+            weight = newWeight;
         } else {
             throw new woodException("-error-Weight cant be a negative number ");
         }
@@ -151,8 +164,9 @@ public class wood {
      */
     public void calctWeight() throws woodException{
         double out = 0;
-        double volume = getDepth() * getLength() * getWidth();
-        out = volume * this.tree.getAvgdensity();
+        double boardFootA = (getDepth() * getLengthAsInches() * getWidth())/144.0;
+        double volumeFt = boardFootA/12.0;
+        out = volumeFt * this.tree.getAvgdensity();
         try {
             setWeight(out);
         } catch (Exception e) {
@@ -161,12 +175,13 @@ public class wood {
     }
 
     public String toString() {
+        Tree outTree = getTree();
+
         String out = "";
         out += getWidth() + " in,";
         out += getDepth() + " in,";
         out += getLength() + " ft, ";
-        out += getTree() + " , ";
-        out += getWeight() + " lbs";
+        out += outTree.getCurrentTree() + " , ";
         return out;
     }
 

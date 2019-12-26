@@ -13,6 +13,7 @@ public class Tree {
     private double avgdensity = 0; // density of the wood type lb/ft^3
 
     public Tree() {
+        setCurTreeFromList(0);
         updateTreeList();
     }
 
@@ -23,7 +24,7 @@ public class Tree {
 
     public Tree(Object copy) {
         if(copy instanceof Tree) {
-            setCurTree(((Tree) copy).getCurrentTree(),getAvgdensity());
+            setCurTree(((Tree) copy).getCurrentTree(),((Tree) copy).getAvgdensity());
             setPressureTreated(getPressureTreated());
         }
     }
@@ -120,9 +121,14 @@ public class Tree {
      * @param input string val
      */
     public void setCurTree(String input,double density) {
-        String out = input+"density-" + density + "-ft/lb^3";
-        currentTreeList.add(out);
-        currentTree = out;
+        if(listSize() > 0) {
+            String out = input + "density-" + density + "-ft/lb^3";
+            currentTreeList.add(out);
+            currentTree = out;
+        } else {
+            setCurTreeFromList(0);
+        }
+
     }
 
     /**
